@@ -1,0 +1,1259 @@
+{
+  "timestamp": "2026-06-08T08:51:18.980Z",
+  "state": {
+    "inventoryReports": {
+      "single_report_1780907345771": [
+        {
+          "id": "rpt_1780907345773_p0ty7z",
+          "userId": "single_report_1780907345771",
+          "productId": "sanitary_pad_regular",
+          "quantity": 20,
+          "cyclePhase": "menstrual",
+          "timestamp": "2026-05-29T08:29:05.771Z",
+          "note": null
+        }
+      ],
+      "test_sub_1780907345832": [
+        {
+          "id": "rpt_1780907345900_yo2nwm",
+          "userId": "test_sub_1780907345832",
+          "productId": "sanitary_pad_regular",
+          "quantity": 50,
+          "cyclePhase": "menstrual",
+          "timestamp": "2026-02-08T08:29:05.899Z",
+          "note": "补录历史数据"
+        },
+        {
+          "id": "rpt_1780907345866_uqscx0",
+          "userId": "test_sub_1780907345832",
+          "productId": "sanitary_pad_regular",
+          "quantity": 30,
+          "cyclePhase": "menstrual",
+          "timestamp": "2026-05-09T08:29:05.832Z",
+          "note": null
+        },
+        {
+          "id": "rpt_1780907345876_hccc3z",
+          "userId": "test_sub_1780907345832",
+          "productId": "sanitary_pad_night",
+          "quantity": 20,
+          "cyclePhase": "menstrual",
+          "timestamp": "2026-05-09T08:29:05.875Z",
+          "note": null
+        },
+        {
+          "id": "rpt_1780907345871_u5wbr2",
+          "userId": "test_sub_1780907345832",
+          "productId": "sanitary_pad_regular",
+          "quantity": 25,
+          "cyclePhase": "luteal",
+          "timestamp": "2026-05-16T08:29:05.869Z",
+          "note": null
+        },
+        {
+          "id": "rpt_1780907345877_tqsry6",
+          "userId": "test_sub_1780907345832",
+          "productId": "sanitary_pad_night",
+          "quantity": 17,
+          "cyclePhase": "follicular",
+          "timestamp": "2026-05-16T08:29:05.877Z",
+          "note": null
+        },
+        {
+          "id": "rpt_1780907345873_uum1e3",
+          "userId": "test_sub_1780907345832",
+          "productId": "sanitary_pad_regular",
+          "quantity": 20,
+          "cyclePhase": "luteal",
+          "timestamp": "2026-05-23T08:29:05.872Z",
+          "note": null
+        },
+        {
+          "id": "rpt_1780907345878_w6rv2m",
+          "userId": "test_sub_1780907345832",
+          "productId": "sanitary_pad_night",
+          "quantity": 14,
+          "cyclePhase": "follicular",
+          "timestamp": "2026-05-23T08:29:05.878Z",
+          "note": null
+        },
+        {
+          "id": "rpt_1780907345875_18ebgs",
+          "userId": "test_sub_1780907345832",
+          "productId": "sanitary_pad_regular",
+          "quantity": 15,
+          "cyclePhase": "luteal",
+          "timestamp": "2026-05-30T08:29:05.874Z",
+          "note": null
+        },
+        {
+          "id": "rpt_1780907345880_al663q",
+          "userId": "test_sub_1780907345832",
+          "productId": "sanitary_pad_night",
+          "quantity": 11,
+          "cyclePhase": "follicular",
+          "timestamp": "2026-05-30T08:29:05.879Z",
+          "note": null
+        }
+      ]
+    },
+    "userPreferences": {
+      "single_report_1780907345771": {
+        "userId": "single_report_1780907345771",
+        "cycleLength": 28,
+        "menstrualLength": 5,
+        "preferredProducts": [],
+        "budgetLevel": "normal",
+        "lastUpdated": "2026-06-08T08:29:05.774Z",
+        "lastMenstrualReported": "2026-05-29T08:29:05.771Z",
+        "anomalies": [],
+        "subscription": {
+          "enabled": false,
+          "cyclesAhead": 1,
+          "globalMaxBudget": null,
+          "globalMinSafetyStockDays": 3,
+          "productStrategies": {}
+        }
+      },
+      "test_sub_1780907345832": {
+        "userId": "test_sub_1780907345832",
+        "cycleLength": 28,
+        "menstrualLength": 5,
+        "preferredProducts": [],
+        "budgetLevel": "normal",
+        "lastUpdated": "2026-06-08T08:29:05.876Z",
+        "lastMenstrualReported": "2026-05-09T08:29:05.875Z",
+        "anomalies": [],
+        "subscription": {
+          "enabled": true,
+          "cyclesAhead": 3,
+          "globalMaxBudget": 500,
+          "globalMinSafetyStockDays": 5,
+          "productStrategies": {
+            "sanitary_pad_regular": {
+              "cyclesAhead": 2,
+              "maxBudget": 100,
+              "minSafetyStockDays": 7,
+              "autoConfirm": false,
+              "skipRules": {
+                "skipEveryNthCycle": 0,
+                "skipOnCertainPhases": []
+              }
+            },
+            "sanitary_pad_night": {
+              "minSafetyStockDays": 5,
+              "skipRules": {
+                "skipOnCertainPhases": [
+                  "ovulation"
+                ]
+              }
+            }
+          },
+          "lastUpdated": "2026-06-08T08:29:05.891Z"
+        }
+      }
+    },
+    "restockPlans": {
+      "test_sub_1780907345832": [
+        {
+          "planId": "plan_1780907345892_fvl0ox",
+          "userId": "test_sub_1780907345832",
+          "createdAt": "2026-06-08T08:29:05.892Z",
+          "status": "cancelled",
+          "version": 2,
+          "cyclesAhead": 3,
+          "cycleLength": 28,
+          "currentPhase": "menstrual",
+          "generatedFrom": {
+            "reportsCount": 8,
+            "lastMenstrualReported": "2026-05-09T08:29:05.875Z",
+            "budgetLevel": "normal",
+            "subscriptionEnabled": true,
+            "snapshotTimestamp": "2026-06-08T08:29:05.892Z"
+          },
+          "factorsConsidered": {
+            "historicalConsumption": true,
+            "cyclePhase": true,
+            "anomalyDetection": true,
+            "budgetPreferences": true,
+            "promoSavings": true,
+            "safetyStock": true,
+            "skipRules": true
+          },
+          "cycles": [
+            {
+              "cycleIndex": 0,
+              "cycleNumber": 1,
+              "cycleStartDate": "2026-06-08",
+              "cycleEndDate": "2026-07-05",
+              "currentPhase": "menstrual",
+              "items": [
+                {
+                  "productId": "sanitary_pad_regular",
+                  "productName": "日用卫生巾",
+                  "unit": "片",
+                  "hasEnoughData": true,
+                  "currentStock": 8.57,
+                  "reportedStock": 15,
+                  "dailyConsumption": 0.7143,
+                  "baseDailyConsumption": 0.7143,
+                  "anomalyAdjustment": {
+                    "adjustedRate": 0.7143,
+                    "anomalyFactor": 1,
+                    "anomaliesConsidered": 0
+                  },
+                  "safetyStockDays": 7,
+                  "safetyStockQuantity": 6,
+                  "stockDaysLeft": 11,
+                  "stockWarning": {
+                    "isWarning": false,
+                    "isCritical": false,
+                    "daysLeft": 11
+                  },
+                  "suggestedPurchase": {
+                    "productId": "sanitary_pad_regular",
+                    "productName": "日用卫生巾",
+                    "unit": "片",
+                    "packSize": 10,
+                    "currentStock": 8.57,
+                    "perCycleNeed": 20,
+                    "needToBuy": 12,
+                    "packsToBuy": 2,
+                    "totalUnits": 20,
+                    "estimatedCost": 30,
+                    "unitPrice": 1.5,
+                    "safetyStockQuantity": 6,
+                    "withSafetyStock": 18,
+                    "packsWithSafetyStock": 2,
+                    "totalUnitsWithSafetyStock": 20,
+                    "estimatedCostWithSafetyStock": 30
+                  },
+                  "estimatedCost": 30,
+                  "packsToBuy": 2,
+                  "totalUnits": 20,
+                  "urgencyPriority": 2,
+                  "urgency": "正常采购",
+                  "savingsStrategies": [
+                    {
+                      "id": "eco_alternative",
+                      "title": "环保替代方案",
+                      "description": "可考虑月经杯/可洗布卫生巾等可重复使用产品，减少长期开支",
+                      "estimatedSavings": 324,
+                      "savingPercent": 60,
+                      "action": "根据个人习惯评估是否切换到更环保经济的方案"
+                    },
+                    {
+                      "id": "brand_comparison",
+                      "title": "品牌对比策略",
+                      "description": "同类产品不同品牌价格差异可达20%-40%，建议对比线上平台评价后选择高性价比品牌",
+                      "estimatedSavings": 135,
+                      "savingPercent": 25,
+                      "action": "关注大促活动期间（618、双11）的品牌套装优惠"
+                    },
+                    {
+                      "id": "promo_timing",
+                      "title": "促销节点采购",
+                      "description": "电商大促（38节、618、双11、双12）期间通常有满减、买赠活动，可提前囤货",
+                      "estimatedSavings": 81,
+                      "savingPercent": 15,
+                      "action": "建议在下个大促节点提前采购2-3个月用量"
+                    },
+                    {
+                      "id": "combo_package",
+                      "title": "组合套装策略",
+                      "description": "日夜组合装、周期套装通常比单品购买更划算",
+                      "estimatedSavings": 54,
+                      "savingPercent": 10,
+                      "action": "优先选择包含日用+夜用+护垫的完整周期套装"
+                    },
+                    {
+                      "id": "bulk_buy",
+                      "title": "整箱囤货策略",
+                      "description": "按3个月用量一次性采购7包，可节省约5%-10%的单价",
+                      "estimatedSavings": 43.2,
+                      "savingPercent": 8,
+                      "action": "建议购买61片（约7包）"
+                    }
+                  ],
+                  "baseEstimatedCost": 30,
+                  "promoAdjustedCost": 28.5,
+                  "potentialSavings": 18,
+                  "effectiveCost": 19.5,
+                  "promoApplied": true,
+                  "savingsNote": "建议结合促销策略可节省约¥18"
+                },
+                {
+                  "productId": "sanitary_pad_night",
+                  "productName": "夜用卫生巾",
+                  "unit": "片",
+                  "hasEnoughData": true,
+                  "currentStock": 7.14,
+                  "reportedStock": 11,
+                  "dailyConsumption": 0.4286,
+                  "baseDailyConsumption": 0.4286,
+                  "anomalyAdjustment": {
+                    "adjustedRate": 0.4286,
+                    "anomalyFactor": 1,
+                    "anomaliesConsidered": 0
+                  },
+                  "safetyStockDays": 5,
+                  "safetyStockQuantity": 3,
+                  "stockDaysLeft": 16,
+                  "stockWarning": {
+                    "isWarning": false,
+                    "isCritical": false,
+                    "daysLeft": 16
+                  },
+                  "suggestedPurchase": {
+                    "productId": "sanitary_pad_night",
+                    "productName": "夜用卫生巾",
+                    "unit": "片",
+                    "packSize": 8,
+                    "currentStock": 7.14,
+                    "perCycleNeed": 12,
+                    "needToBuy": 5,
+                    "packsToBuy": 1,
+                    "totalUnits": 8,
+                    "estimatedCost": 16,
+                    "unitPrice": 2,
+                    "safetyStockQuantity": 3,
+                    "withSafetyStock": 8,
+                    "packsWithSafetyStock": 1,
+                    "totalUnitsWithSafetyStock": 8,
+                    "estimatedCostWithSafetyStock": 16
+                  },
+                  "estimatedCost": 16,
+                  "packsToBuy": 1,
+                  "totalUnits": 8,
+                  "urgencyPriority": 2,
+                  "urgency": "正常采购",
+                  "savingsStrategies": [
+                    {
+                      "id": "eco_alternative",
+                      "title": "环保替代方案",
+                      "description": "可考虑月经杯/可洗布卫生巾等可重复使用产品，减少长期开支",
+                      "estimatedSavings": 230.4,
+                      "savingPercent": 60,
+                      "action": "根据个人习惯评估是否切换到更环保经济的方案"
+                    },
+                    {
+                      "id": "brand_comparison",
+                      "title": "品牌对比策略",
+                      "description": "同类产品不同品牌价格差异可达20%-40%，建议对比线上平台评价后选择高性价比品牌",
+                      "estimatedSavings": 96,
+                      "savingPercent": 25,
+                      "action": "关注大促活动期间（618、双11）的品牌套装优惠"
+                    },
+                    {
+                      "id": "promo_timing",
+                      "title": "促销节点采购",
+                      "description": "电商大促（38节、618、双11、双12）期间通常有满减、买赠活动，可提前囤货",
+                      "estimatedSavings": 57.6,
+                      "savingPercent": 15,
+                      "action": "建议在下个大促节点提前采购2-3个月用量"
+                    },
+                    {
+                      "id": "combo_package",
+                      "title": "组合套装策略",
+                      "description": "日夜组合装、周期套装通常比单品购买更划算",
+                      "estimatedSavings": 38.4,
+                      "savingPercent": 10,
+                      "action": "优先选择包含日用+夜用+护垫的完整周期套装"
+                    },
+                    {
+                      "id": "bulk_buy",
+                      "title": "整箱囤货策略",
+                      "description": "按3个月用量一次性采购5包，可节省约5%-10%的单价",
+                      "estimatedSavings": 30.72,
+                      "savingPercent": 8,
+                      "action": "建议购买37片（约5包）"
+                    }
+                  ],
+                  "baseEstimatedCost": 16,
+                  "promoAdjustedCost": 15.2,
+                  "potentialSavings": 9.6,
+                  "effectiveCost": 10.4,
+                  "promoApplied": true,
+                  "savingsNote": "建议结合促销策略可节省约¥9.6"
+                }
+              ],
+              "budgetSummary": {
+                "maxBudget": 500,
+                "estimatedTotalCost": 46,
+                "baseTotalCost": 46,
+                "budgetExceeded": false,
+                "budgetAdjusted": false
+              }
+            },
+            {
+              "cycleIndex": 1,
+              "cycleNumber": 2,
+              "cycleStartDate": "2026-07-06",
+              "cycleEndDate": "2026-08-02",
+              "currentPhase": "menstrual",
+              "items": [
+                {
+                  "productId": "sanitary_pad_regular",
+                  "productName": "日用卫生巾",
+                  "unit": "片",
+                  "hasEnoughData": true,
+                  "currentStock": 0,
+                  "reportedStock": 15,
+                  "dailyConsumption": 0.7143,
+                  "baseDailyConsumption": 0.7143,
+                  "anomalyAdjustment": {
+                    "adjustedRate": 0.7143,
+                    "anomalyFactor": 1,
+                    "anomaliesConsidered": 0
+                  },
+                  "safetyStockDays": 7,
+                  "safetyStockQuantity": 6,
+                  "stockDaysLeft": 0,
+                  "stockWarning": {
+                    "isWarning": true,
+                    "isCritical": true,
+                    "daysLeft": 0
+                  },
+                  "suggestedPurchase": {
+                    "productId": "sanitary_pad_regular",
+                    "productName": "日用卫生巾",
+                    "unit": "片",
+                    "packSize": 10,
+                    "currentStock": 0,
+                    "perCycleNeed": 20,
+                    "needToBuy": 21,
+                    "packsToBuy": 3,
+                    "totalUnits": 30,
+                    "estimatedCost": 45,
+                    "unitPrice": 1.5,
+                    "safetyStockQuantity": 6,
+                    "withSafetyStock": 27,
+                    "packsWithSafetyStock": 3,
+                    "totalUnitsWithSafetyStock": 30,
+                    "estimatedCostWithSafetyStock": 45
+                  },
+                  "estimatedCost": 45,
+                  "packsToBuy": 3,
+                  "totalUnits": 30,
+                  "urgencyPriority": 0,
+                  "urgency": "立即购买",
+                  "savingsStrategies": [
+                    {
+                      "id": "eco_alternative",
+                      "title": "环保替代方案",
+                      "description": "可考虑月经杯/可洗布卫生巾等可重复使用产品，减少长期开支",
+                      "estimatedSavings": 324,
+                      "savingPercent": 60,
+                      "action": "根据个人习惯评估是否切换到更环保经济的方案"
+                    },
+                    {
+                      "id": "brand_comparison",
+                      "title": "品牌对比策略",
+                      "description": "同类产品不同品牌价格差异可达20%-40%，建议对比线上平台评价后选择高性价比品牌",
+                      "estimatedSavings": 135,
+                      "savingPercent": 25,
+                      "action": "关注大促活动期间（618、双11）的品牌套装优惠"
+                    },
+                    {
+                      "id": "promo_timing",
+                      "title": "促销节点采购",
+                      "description": "电商大促（38节、618、双11、双12）期间通常有满减、买赠活动，可提前囤货",
+                      "estimatedSavings": 81,
+                      "savingPercent": 15,
+                      "action": "建议在下个大促节点提前采购2-3个月用量"
+                    },
+                    {
+                      "id": "combo_package",
+                      "title": "组合套装策略",
+                      "description": "日夜组合装、周期套装通常比单品购买更划算",
+                      "estimatedSavings": 54,
+                      "savingPercent": 10,
+                      "action": "优先选择包含日用+夜用+护垫的完整周期套装"
+                    },
+                    {
+                      "id": "bulk_buy",
+                      "title": "整箱囤货策略",
+                      "description": "按3个月用量一次性采购7包，可节省约5%-10%的单价",
+                      "estimatedSavings": 43.2,
+                      "savingPercent": 8,
+                      "action": "建议购买61片（约7包）"
+                    }
+                  ],
+                  "baseEstimatedCost": 45,
+                  "promoAdjustedCost": 42.75,
+                  "potentialSavings": 27,
+                  "effectiveCost": 29.25,
+                  "promoApplied": true,
+                  "savingsNote": "建议结合促销策略可节省约¥27"
+                },
+                {
+                  "productId": "sanitary_pad_night",
+                  "productName": "夜用卫生巾",
+                  "unit": "片",
+                  "hasEnoughData": true,
+                  "currentStock": 0,
+                  "reportedStock": 11,
+                  "dailyConsumption": 0.4286,
+                  "baseDailyConsumption": 0.4286,
+                  "anomalyAdjustment": {
+                    "adjustedRate": 0.4286,
+                    "anomalyFactor": 1,
+                    "anomaliesConsidered": 0
+                  },
+                  "safetyStockDays": 5,
+                  "safetyStockQuantity": 3,
+                  "stockDaysLeft": 0,
+                  "stockWarning": {
+                    "isWarning": true,
+                    "isCritical": true,
+                    "daysLeft": 0
+                  },
+                  "suggestedPurchase": {
+                    "productId": "sanitary_pad_night",
+                    "productName": "夜用卫生巾",
+                    "unit": "片",
+                    "packSize": 8,
+                    "currentStock": 0,
+                    "perCycleNeed": 12,
+                    "needToBuy": 13,
+                    "packsToBuy": 2,
+                    "totalUnits": 16,
+                    "estimatedCost": 32,
+                    "unitPrice": 2,
+                    "safetyStockQuantity": 3,
+                    "withSafetyStock": 16,
+                    "packsWithSafetyStock": 2,
+                    "totalUnitsWithSafetyStock": 16,
+                    "estimatedCostWithSafetyStock": 32
+                  },
+                  "estimatedCost": 32,
+                  "packsToBuy": 2,
+                  "totalUnits": 16,
+                  "urgencyPriority": 0,
+                  "urgency": "立即购买",
+                  "savingsStrategies": [
+                    {
+                      "id": "eco_alternative",
+                      "title": "环保替代方案",
+                      "description": "可考虑月经杯/可洗布卫生巾等可重复使用产品，减少长期开支",
+                      "estimatedSavings": 230.4,
+                      "savingPercent": 60,
+                      "action": "根据个人习惯评估是否切换到更环保经济的方案"
+                    },
+                    {
+                      "id": "brand_comparison",
+                      "title": "品牌对比策略",
+                      "description": "同类产品不同品牌价格差异可达20%-40%，建议对比线上平台评价后选择高性价比品牌",
+                      "estimatedSavings": 96,
+                      "savingPercent": 25,
+                      "action": "关注大促活动期间（618、双11）的品牌套装优惠"
+                    },
+                    {
+                      "id": "promo_timing",
+                      "title": "促销节点采购",
+                      "description": "电商大促（38节、618、双11、双12）期间通常有满减、买赠活动，可提前囤货",
+                      "estimatedSavings": 57.6,
+                      "savingPercent": 15,
+                      "action": "建议在下个大促节点提前采购2-3个月用量"
+                    },
+                    {
+                      "id": "combo_package",
+                      "title": "组合套装策略",
+                      "description": "日夜组合装、周期套装通常比单品购买更划算",
+                      "estimatedSavings": 38.4,
+                      "savingPercent": 10,
+                      "action": "优先选择包含日用+夜用+护垫的完整周期套装"
+                    },
+                    {
+                      "id": "bulk_buy",
+                      "title": "整箱囤货策略",
+                      "description": "按3个月用量一次性采购5包，可节省约5%-10%的单价",
+                      "estimatedSavings": 30.72,
+                      "savingPercent": 8,
+                      "action": "建议购买37片（约5包）"
+                    }
+                  ],
+                  "baseEstimatedCost": 32,
+                  "promoAdjustedCost": 30.4,
+                  "potentialSavings": 19.2,
+                  "effectiveCost": 20.8,
+                  "promoApplied": true,
+                  "savingsNote": "建议结合促销策略可节省约¥19.2"
+                }
+              ],
+              "budgetSummary": {
+                "maxBudget": 500,
+                "estimatedTotalCost": 77,
+                "baseTotalCost": 77,
+                "budgetExceeded": false,
+                "budgetAdjusted": false
+              }
+            },
+            {
+              "cycleIndex": 2,
+              "cycleNumber": 3,
+              "cycleStartDate": "2026-08-03",
+              "cycleEndDate": "2026-08-30",
+              "currentPhase": "menstrual",
+              "items": [
+                {
+                  "productId": "sanitary_pad_regular",
+                  "productName": "日用卫生巾",
+                  "unit": "片",
+                  "hasEnoughData": true,
+                  "currentStock": 0,
+                  "reportedStock": 15,
+                  "dailyConsumption": 0.7143,
+                  "baseDailyConsumption": 0.7143,
+                  "anomalyAdjustment": {
+                    "adjustedRate": 0.7143,
+                    "anomalyFactor": 1,
+                    "anomaliesConsidered": 0
+                  },
+                  "safetyStockDays": 7,
+                  "safetyStockQuantity": 6,
+                  "stockDaysLeft": 0,
+                  "stockWarning": {
+                    "isWarning": true,
+                    "isCritical": true,
+                    "daysLeft": 0
+                  },
+                  "suggestedPurchase": {
+                    "productId": "sanitary_pad_regular",
+                    "productName": "日用卫生巾",
+                    "unit": "片",
+                    "packSize": 10,
+                    "currentStock": 0,
+                    "perCycleNeed": 20,
+                    "needToBuy": 21,
+                    "packsToBuy": 3,
+                    "totalUnits": 30,
+                    "estimatedCost": 45,
+                    "unitPrice": 1.5,
+                    "safetyStockQuantity": 6,
+                    "withSafetyStock": 27,
+                    "packsWithSafetyStock": 3,
+                    "totalUnitsWithSafetyStock": 30,
+                    "estimatedCostWithSafetyStock": 45
+                  },
+                  "estimatedCost": 45,
+                  "packsToBuy": 3,
+                  "totalUnits": 30,
+                  "urgencyPriority": 0,
+                  "urgency": "立即购买",
+                  "savingsStrategies": [
+                    {
+                      "id": "eco_alternative",
+                      "title": "环保替代方案",
+                      "description": "可考虑月经杯/可洗布卫生巾等可重复使用产品，减少长期开支",
+                      "estimatedSavings": 324,
+                      "savingPercent": 60,
+                      "action": "根据个人习惯评估是否切换到更环保经济的方案"
+                    },
+                    {
+                      "id": "brand_comparison",
+                      "title": "品牌对比策略",
+                      "description": "同类产品不同品牌价格差异可达20%-40%，建议对比线上平台评价后选择高性价比品牌",
+                      "estimatedSavings": 135,
+                      "savingPercent": 25,
+                      "action": "关注大促活动期间（618、双11）的品牌套装优惠"
+                    },
+                    {
+                      "id": "promo_timing",
+                      "title": "促销节点采购",
+                      "description": "电商大促（38节、618、双11、双12）期间通常有满减、买赠活动，可提前囤货",
+                      "estimatedSavings": 81,
+                      "savingPercent": 15,
+                      "action": "建议在下个大促节点提前采购2-3个月用量"
+                    },
+                    {
+                      "id": "combo_package",
+                      "title": "组合套装策略",
+                      "description": "日夜组合装、周期套装通常比单品购买更划算",
+                      "estimatedSavings": 54,
+                      "savingPercent": 10,
+                      "action": "优先选择包含日用+夜用+护垫的完整周期套装"
+                    },
+                    {
+                      "id": "bulk_buy",
+                      "title": "整箱囤货策略",
+                      "description": "按3个月用量一次性采购7包，可节省约5%-10%的单价",
+                      "estimatedSavings": 43.2,
+                      "savingPercent": 8,
+                      "action": "建议购买61片（约7包）"
+                    }
+                  ],
+                  "baseEstimatedCost": 45,
+                  "promoAdjustedCost": 42.75,
+                  "potentialSavings": 27,
+                  "effectiveCost": 29.25,
+                  "promoApplied": true,
+                  "savingsNote": "建议结合促销策略可节省约¥27"
+                },
+                {
+                  "productId": "sanitary_pad_night",
+                  "productName": "夜用卫生巾",
+                  "unit": "片",
+                  "hasEnoughData": true,
+                  "currentStock": 0,
+                  "reportedStock": 11,
+                  "dailyConsumption": 0.4286,
+                  "baseDailyConsumption": 0.4286,
+                  "anomalyAdjustment": {
+                    "adjustedRate": 0.4286,
+                    "anomalyFactor": 1,
+                    "anomaliesConsidered": 0
+                  },
+                  "safetyStockDays": 5,
+                  "safetyStockQuantity": 3,
+                  "stockDaysLeft": 0,
+                  "stockWarning": {
+                    "isWarning": true,
+                    "isCritical": true,
+                    "daysLeft": 0
+                  },
+                  "suggestedPurchase": {
+                    "productId": "sanitary_pad_night",
+                    "productName": "夜用卫生巾",
+                    "unit": "片",
+                    "packSize": 8,
+                    "currentStock": 0,
+                    "perCycleNeed": 12,
+                    "needToBuy": 13,
+                    "packsToBuy": 2,
+                    "totalUnits": 16,
+                    "estimatedCost": 32,
+                    "unitPrice": 2,
+                    "safetyStockQuantity": 3,
+                    "withSafetyStock": 16,
+                    "packsWithSafetyStock": 2,
+                    "totalUnitsWithSafetyStock": 16,
+                    "estimatedCostWithSafetyStock": 32
+                  },
+                  "estimatedCost": 32,
+                  "packsToBuy": 2,
+                  "totalUnits": 16,
+                  "urgencyPriority": 0,
+                  "urgency": "立即购买",
+                  "savingsStrategies": [
+                    {
+                      "id": "eco_alternative",
+                      "title": "环保替代方案",
+                      "description": "可考虑月经杯/可洗布卫生巾等可重复使用产品，减少长期开支",
+                      "estimatedSavings": 230.4,
+                      "savingPercent": 60,
+                      "action": "根据个人习惯评估是否切换到更环保经济的方案"
+                    },
+                    {
+                      "id": "brand_comparison",
+                      "title": "品牌对比策略",
+                      "description": "同类产品不同品牌价格差异可达20%-40%，建议对比线上平台评价后选择高性价比品牌",
+                      "estimatedSavings": 96,
+                      "savingPercent": 25,
+                      "action": "关注大促活动期间（618、双11）的品牌套装优惠"
+                    },
+                    {
+                      "id": "promo_timing",
+                      "title": "促销节点采购",
+                      "description": "电商大促（38节、618、双11、双12）期间通常有满减、买赠活动，可提前囤货",
+                      "estimatedSavings": 57.6,
+                      "savingPercent": 15,
+                      "action": "建议在下个大促节点提前采购2-3个月用量"
+                    },
+                    {
+                      "id": "combo_package",
+                      "title": "组合套装策略",
+                      "description": "日夜组合装、周期套装通常比单品购买更划算",
+                      "estimatedSavings": 38.4,
+                      "savingPercent": 10,
+                      "action": "优先选择包含日用+夜用+护垫的完整周期套装"
+                    },
+                    {
+                      "id": "bulk_buy",
+                      "title": "整箱囤货策略",
+                      "description": "按3个月用量一次性采购5包，可节省约5%-10%的单价",
+                      "estimatedSavings": 30.72,
+                      "savingPercent": 8,
+                      "action": "建议购买37片（约5包）"
+                    }
+                  ],
+                  "baseEstimatedCost": 32,
+                  "promoAdjustedCost": 30.4,
+                  "potentialSavings": 19.2,
+                  "effectiveCost": 20.8,
+                  "promoApplied": true,
+                  "savingsNote": "建议结合促销策略可节省约¥19.2"
+                }
+              ],
+              "budgetSummary": {
+                "maxBudget": 500,
+                "estimatedTotalCost": 77,
+                "baseTotalCost": 77,
+                "budgetExceeded": false,
+                "budgetAdjusted": false
+              }
+            }
+          ],
+          "summary": {
+            "totalCycles": 3,
+            "totalProducts": 2,
+            "grandTotalCost": 200,
+            "grandBaseCost": 200,
+            "totalPotentialSavings": 120,
+            "immediatePurchaseCount": 4,
+            "warningPurchaseCount": 0
+          },
+          "previousPlanId": "plan_1780907345888_gi31w8",
+          "cancelledAt": "2026-06-08T08:29:05.897Z",
+          "cancelReason": "不需要了"
+        },
+        {
+          "planId": "plan_1780907345888_gi31w8",
+          "userId": "test_sub_1780907345832",
+          "createdAt": "2026-06-08T08:29:05.888Z",
+          "status": "confirmed",
+          "version": 1,
+          "cyclesAhead": 2,
+          "cycleLength": 28,
+          "currentPhase": "menstrual",
+          "generatedFrom": {
+            "reportsCount": 8,
+            "lastMenstrualReported": "2026-05-09T08:29:05.875Z",
+            "budgetLevel": "normal",
+            "subscriptionEnabled": true,
+            "snapshotTimestamp": "2026-06-08T08:29:05.888Z"
+          },
+          "factorsConsidered": {
+            "historicalConsumption": true,
+            "cyclePhase": true,
+            "anomalyDetection": true,
+            "budgetPreferences": true,
+            "promoSavings": true,
+            "safetyStock": true,
+            "skipRules": true
+          },
+          "cycles": [
+            {
+              "cycleIndex": 0,
+              "cycleNumber": 1,
+              "cycleStartDate": "2026-06-08",
+              "cycleEndDate": "2026-07-05",
+              "currentPhase": "menstrual",
+              "items": [
+                {
+                  "productId": "sanitary_pad_regular",
+                  "productName": "日用卫生巾",
+                  "unit": "片",
+                  "hasEnoughData": true,
+                  "currentStock": 8.57,
+                  "reportedStock": 15,
+                  "dailyConsumption": 0.7143,
+                  "baseDailyConsumption": 0.7143,
+                  "anomalyAdjustment": {
+                    "adjustedRate": 0.7143,
+                    "anomalyFactor": 1,
+                    "anomaliesConsidered": 0
+                  },
+                  "safetyStockDays": 7,
+                  "safetyStockQuantity": 6,
+                  "stockDaysLeft": 11,
+                  "stockWarning": {
+                    "isWarning": false,
+                    "isCritical": false,
+                    "daysLeft": 11
+                  },
+                  "suggestedPurchase": {
+                    "productId": "sanitary_pad_regular",
+                    "productName": "日用卫生巾",
+                    "unit": "片",
+                    "packSize": 10,
+                    "currentStock": 8.57,
+                    "perCycleNeed": 20,
+                    "needToBuy": 12,
+                    "packsToBuy": 2,
+                    "totalUnits": 20,
+                    "estimatedCost": 30,
+                    "unitPrice": 1.5,
+                    "safetyStockQuantity": 6,
+                    "withSafetyStock": 18,
+                    "packsWithSafetyStock": 2,
+                    "totalUnitsWithSafetyStock": 20,
+                    "estimatedCostWithSafetyStock": 30
+                  },
+                  "estimatedCost": 30,
+                  "packsToBuy": 2,
+                  "totalUnits": 20,
+                  "urgencyPriority": 2,
+                  "urgency": "正常采购",
+                  "savingsStrategies": [
+                    {
+                      "id": "eco_alternative",
+                      "title": "环保替代方案",
+                      "description": "可考虑月经杯/可洗布卫生巾等可重复使用产品，减少长期开支",
+                      "estimatedSavings": 324,
+                      "savingPercent": 60,
+                      "action": "根据个人习惯评估是否切换到更环保经济的方案"
+                    },
+                    {
+                      "id": "brand_comparison",
+                      "title": "品牌对比策略",
+                      "description": "同类产品不同品牌价格差异可达20%-40%，建议对比线上平台评价后选择高性价比品牌",
+                      "estimatedSavings": 135,
+                      "savingPercent": 25,
+                      "action": "关注大促活动期间（618、双11）的品牌套装优惠"
+                    },
+                    {
+                      "id": "promo_timing",
+                      "title": "促销节点采购",
+                      "description": "电商大促（38节、618、双11、双12）期间通常有满减、买赠活动，可提前囤货",
+                      "estimatedSavings": 81,
+                      "savingPercent": 15,
+                      "action": "建议在下个大促节点提前采购2-3个月用量"
+                    },
+                    {
+                      "id": "combo_package",
+                      "title": "组合套装策略",
+                      "description": "日夜组合装、周期套装通常比单品购买更划算",
+                      "estimatedSavings": 54,
+                      "savingPercent": 10,
+                      "action": "优先选择包含日用+夜用+护垫的完整周期套装"
+                    },
+                    {
+                      "id": "bulk_buy",
+                      "title": "整箱囤货策略",
+                      "description": "按3个月用量一次性采购7包，可节省约5%-10%的单价",
+                      "estimatedSavings": 43.2,
+                      "savingPercent": 8,
+                      "action": "建议购买61片（约7包）"
+                    }
+                  ],
+                  "baseEstimatedCost": 30,
+                  "promoAdjustedCost": 28.5,
+                  "potentialSavings": 18,
+                  "effectiveCost": 19.5,
+                  "promoApplied": true,
+                  "savingsNote": "建议结合促销策略可节省约¥18"
+                },
+                {
+                  "productId": "sanitary_pad_night",
+                  "productName": "夜用卫生巾",
+                  "unit": "片",
+                  "hasEnoughData": true,
+                  "currentStock": 7.14,
+                  "reportedStock": 11,
+                  "dailyConsumption": 0.4286,
+                  "baseDailyConsumption": 0.4286,
+                  "anomalyAdjustment": {
+                    "adjustedRate": 0.4286,
+                    "anomalyFactor": 1,
+                    "anomaliesConsidered": 0
+                  },
+                  "safetyStockDays": 5,
+                  "safetyStockQuantity": 3,
+                  "stockDaysLeft": 16,
+                  "stockWarning": {
+                    "isWarning": false,
+                    "isCritical": false,
+                    "daysLeft": 16
+                  },
+                  "suggestedPurchase": {
+                    "productId": "sanitary_pad_night",
+                    "productName": "夜用卫生巾",
+                    "unit": "片",
+                    "packSize": 8,
+                    "currentStock": 7.14,
+                    "perCycleNeed": 12,
+                    "needToBuy": 5,
+                    "packsToBuy": 1,
+                    "totalUnits": 8,
+                    "estimatedCost": 16,
+                    "unitPrice": 2,
+                    "safetyStockQuantity": 3,
+                    "withSafetyStock": 8,
+                    "packsWithSafetyStock": 1,
+                    "totalUnitsWithSafetyStock": 8,
+                    "estimatedCostWithSafetyStock": 16
+                  },
+                  "estimatedCost": 16,
+                  "packsToBuy": 1,
+                  "totalUnits": 8,
+                  "urgencyPriority": 2,
+                  "urgency": "正常采购",
+                  "savingsStrategies": [
+                    {
+                      "id": "eco_alternative",
+                      "title": "环保替代方案",
+                      "description": "可考虑月经杯/可洗布卫生巾等可重复使用产品，减少长期开支",
+                      "estimatedSavings": 230.4,
+                      "savingPercent": 60,
+                      "action": "根据个人习惯评估是否切换到更环保经济的方案"
+                    },
+                    {
+                      "id": "brand_comparison",
+                      "title": "品牌对比策略",
+                      "description": "同类产品不同品牌价格差异可达20%-40%，建议对比线上平台评价后选择高性价比品牌",
+                      "estimatedSavings": 96,
+                      "savingPercent": 25,
+                      "action": "关注大促活动期间（618、双11）的品牌套装优惠"
+                    },
+                    {
+                      "id": "promo_timing",
+                      "title": "促销节点采购",
+                      "description": "电商大促（38节、618、双11、双12）期间通常有满减、买赠活动，可提前囤货",
+                      "estimatedSavings": 57.6,
+                      "savingPercent": 15,
+                      "action": "建议在下个大促节点提前采购2-3个月用量"
+                    },
+                    {
+                      "id": "combo_package",
+                      "title": "组合套装策略",
+                      "description": "日夜组合装、周期套装通常比单品购买更划算",
+                      "estimatedSavings": 38.4,
+                      "savingPercent": 10,
+                      "action": "优先选择包含日用+夜用+护垫的完整周期套装"
+                    },
+                    {
+                      "id": "bulk_buy",
+                      "title": "整箱囤货策略",
+                      "description": "按3个月用量一次性采购5包，可节省约5%-10%的单价",
+                      "estimatedSavings": 30.72,
+                      "savingPercent": 8,
+                      "action": "建议购买37片（约5包）"
+                    }
+                  ],
+                  "baseEstimatedCost": 16,
+                  "promoAdjustedCost": 15.2,
+                  "potentialSavings": 9.6,
+                  "effectiveCost": 10.4,
+                  "promoApplied": true,
+                  "savingsNote": "建议结合促销策略可节省约¥9.6"
+                }
+              ],
+              "budgetSummary": {
+                "maxBudget": 200,
+                "estimatedTotalCost": 46,
+                "baseTotalCost": 46,
+                "budgetExceeded": false,
+                "budgetAdjusted": false
+              }
+            },
+            {
+              "cycleIndex": 1,
+              "cycleNumber": 2,
+              "cycleStartDate": "2026-07-06",
+              "cycleEndDate": "2026-08-02",
+              "currentPhase": "menstrual",
+              "items": [
+                {
+                  "productId": "sanitary_pad_regular",
+                  "productName": "日用卫生巾",
+                  "unit": "片",
+                  "hasEnoughData": true,
+                  "currentStock": 0,
+                  "reportedStock": 15,
+                  "dailyConsumption": 0.7143,
+                  "baseDailyConsumption": 0.7143,
+                  "anomalyAdjustment": {
+                    "adjustedRate": 0.7143,
+                    "anomalyFactor": 1,
+                    "anomaliesConsidered": 0
+                  },
+                  "safetyStockDays": 7,
+                  "safetyStockQuantity": 6,
+                  "stockDaysLeft": 0,
+                  "stockWarning": {
+                    "isWarning": true,
+                    "isCritical": true,
+                    "daysLeft": 0
+                  },
+                  "suggestedPurchase": {
+                    "productId": "sanitary_pad_regular",
+                    "productName": "日用卫生巾",
+                    "unit": "片",
+                    "packSize": 10,
+                    "currentStock": 0,
+                    "perCycleNeed": 20,
+                    "needToBuy": 21,
+                    "packsToBuy": 3,
+                    "totalUnits": 30,
+                    "estimatedCost": 45,
+                    "unitPrice": 1.5,
+                    "safetyStockQuantity": 6,
+                    "withSafetyStock": 27,
+                    "packsWithSafetyStock": 3,
+                    "totalUnitsWithSafetyStock": 30,
+                    "estimatedCostWithSafetyStock": 45
+                  },
+                  "estimatedCost": 45,
+                  "packsToBuy": 3,
+                  "totalUnits": 30,
+                  "urgencyPriority": 0,
+                  "urgency": "立即购买",
+                  "savingsStrategies": [
+                    {
+                      "id": "eco_alternative",
+                      "title": "环保替代方案",
+                      "description": "可考虑月经杯/可洗布卫生巾等可重复使用产品，减少长期开支",
+                      "estimatedSavings": 324,
+                      "savingPercent": 60,
+                      "action": "根据个人习惯评估是否切换到更环保经济的方案"
+                    },
+                    {
+                      "id": "brand_comparison",
+                      "title": "品牌对比策略",
+                      "description": "同类产品不同品牌价格差异可达20%-40%，建议对比线上平台评价后选择高性价比品牌",
+                      "estimatedSavings": 135,
+                      "savingPercent": 25,
+                      "action": "关注大促活动期间（618、双11）的品牌套装优惠"
+                    },
+                    {
+                      "id": "promo_timing",
+                      "title": "促销节点采购",
+                      "description": "电商大促（38节、618、双11、双12）期间通常有满减、买赠活动，可提前囤货",
+                      "estimatedSavings": 81,
+                      "savingPercent": 15,
+                      "action": "建议在下个大促节点提前采购2-3个月用量"
+                    },
+                    {
+                      "id": "combo_package",
+                      "title": "组合套装策略",
+                      "description": "日夜组合装、周期套装通常比单品购买更划算",
+                      "estimatedSavings": 54,
+                      "savingPercent": 10,
+                      "action": "优先选择包含日用+夜用+护垫的完整周期套装"
+                    },
+                    {
+                      "id": "bulk_buy",
+                      "title": "整箱囤货策略",
+                      "description": "按3个月用量一次性采购7包，可节省约5%-10%的单价",
+                      "estimatedSavings": 43.2,
+                      "savingPercent": 8,
+                      "action": "建议购买61片（约7包）"
+                    }
+                  ],
+                  "baseEstimatedCost": 45,
+                  "promoAdjustedCost": 42.75,
+                  "potentialSavings": 27,
+                  "effectiveCost": 29.25,
+                  "promoApplied": true,
+                  "savingsNote": "建议结合促销策略可节省约¥27"
+                },
+                {
+                  "productId": "sanitary_pad_night",
+                  "productName": "夜用卫生巾",
+                  "unit": "片",
+                  "hasEnoughData": true,
+                  "currentStock": 0,
+                  "reportedStock": 11,
+                  "dailyConsumption": 0.4286,
+                  "baseDailyConsumption": 0.4286,
+                  "anomalyAdjustment": {
+                    "adjustedRate": 0.4286,
+                    "anomalyFactor": 1,
+                    "anomaliesConsidered": 0
+                  },
+                  "safetyStockDays": 5,
+                  "safetyStockQuantity": 3,
+                  "stockDaysLeft": 0,
+                  "stockWarning": {
+                    "isWarning": true,
+                    "isCritical": true,
+                    "daysLeft": 0
+                  },
+                  "suggestedPurchase": {
+                    "productId": "sanitary_pad_night",
+                    "productName": "夜用卫生巾",
+                    "unit": "片",
+                    "packSize": 8,
+                    "currentStock": 0,
+                    "perCycleNeed": 12,
+                    "needToBuy": 13,
+                    "packsToBuy": 2,
+                    "totalUnits": 16,
+                    "estimatedCost": 32,
+                    "unitPrice": 2,
+                    "safetyStockQuantity": 3,
+                    "withSafetyStock": 16,
+                    "packsWithSafetyStock": 2,
+                    "totalUnitsWithSafetyStock": 16,
+                    "estimatedCostWithSafetyStock": 32
+                  },
+                  "estimatedCost": 32,
+                  "packsToBuy": 2,
+                  "totalUnits": 16,
+                  "urgencyPriority": 0,
+                  "urgency": "立即购买",
+                  "savingsStrategies": [
+                    {
+                      "id": "eco_alternative",
+                      "title": "环保替代方案",
+                      "description": "可考虑月经杯/可洗布卫生巾等可重复使用产品，减少长期开支",
+                      "estimatedSavings": 230.4,
+                      "savingPercent": 60,
+                      "action": "根据个人习惯评估是否切换到更环保经济的方案"
+                    },
+                    {
+                      "id": "brand_comparison",
+                      "title": "品牌对比策略",
+                      "description": "同类产品不同品牌价格差异可达20%-40%，建议对比线上平台评价后选择高性价比品牌",
+                      "estimatedSavings": 96,
+                      "savingPercent": 25,
+                      "action": "关注大促活动期间（618、双11）的品牌套装优惠"
+                    },
+                    {
+                      "id": "promo_timing",
+                      "title": "促销节点采购",
+                      "description": "电商大促（38节、618、双11、双12）期间通常有满减、买赠活动，可提前囤货",
+                      "estimatedSavings": 57.6,
+                      "savingPercent": 15,
+                      "action": "建议在下个大促节点提前采购2-3个月用量"
+                    },
+                    {
+                      "id": "combo_package",
+                      "title": "组合套装策略",
+                      "description": "日夜组合装、周期套装通常比单品购买更划算",
+                      "estimatedSavings": 38.4,
+                      "savingPercent": 10,
+                      "action": "优先选择包含日用+夜用+护垫的完整周期套装"
+                    },
+                    {
+                      "id": "bulk_buy",
+                      "title": "整箱囤货策略",
+                      "description": "按3个月用量一次性采购5包，可节省约5%-10%的单价",
+                      "estimatedSavings": 30.72,
+                      "savingPercent": 8,
+                      "action": "建议购买37片（约5包）"
+                    }
+                  ],
+                  "baseEstimatedCost": 32,
+                  "promoAdjustedCost": 30.4,
+                  "potentialSavings": 19.2,
+                  "effectiveCost": 20.8,
+                  "promoApplied": true,
+                  "savingsNote": "建议结合促销策略可节省约¥19.2"
+                }
+              ],
+              "budgetSummary": {
+                "maxBudget": 200,
+                "estimatedTotalCost": 77,
+                "baseTotalCost": 77,
+                "budgetExceeded": false,
+                "budgetAdjusted": false
+              }
+            }
+          ],
+          "summary": {
+            "totalCycles": 2,
+            "totalProducts": 2,
+            "grandTotalCost": 123,
+            "grandBaseCost": 123,
+            "totalPotentialSavings": 73.8,
+            "immediatePurchaseCount": 2,
+            "warningPurchaseCount": 0
+          },
+          "confirmedAt": "2026-06-08T08:29:05.895Z"
+        }
+      ]
+    }
+  }
+}

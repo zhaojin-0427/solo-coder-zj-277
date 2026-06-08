@@ -25,6 +25,7 @@ function getPreference(req, res) {
       budgetLevel: pref.budgetLevel,
       preferredProducts: pref.preferredProducts,
       lastUpdated: pref.lastUpdated,
+      lastMenstrualReported: pref.lastMenstrualReported || null,
       learnedInsights,
       anomalies: {
         totalCount: pref.anomalies.length,
