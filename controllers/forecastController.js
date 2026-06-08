@@ -7,17 +7,17 @@ function getForecast(req, res) {
   try {
     const { userId } = req.params;
     if (!userId) {
-      return res.json(badRequest('缺少 userId 参数'));
+      return badRequest('缺少 userId 参数', null, res);
     }
 
     const reports = getReportsByUser(userId);
     if (reports.length === 0) {
-      return res.json(success({
+      return success({
         userId,
         message: '暂无上报数据，请先进行库存上报以建立消耗基线',
         hasEnoughData: false,
         productForecasts: []
-      }, '查询成功'));
+      }, '查询成功', res);
     }
 
     const pref = getUserPreference(userId);
@@ -48,7 +48,10 @@ function getForecast(req, res) {
             cyclePhase: latestReport.cyclePhase
           },
           reportsCount: productReports.length,
-          stockExtrapolation
+          reportedStock: latestReport.quantity,
+          daysSinceLastReport: stockExtrapolation.daysSinceReport,
+          stockIsStale: stockExtrapolation.stale,
+          stockNote: stockExtrapolation.hasRate ? null : '缺少消耗基线数据，无法推算当前库存，请继续上报'
         });
         return;
       }
@@ -94,17 +97,17 @@ function getForecast(req, res) {
 
     const summary = generateSummary(productForecasts, cycleLength);
 
-    return res.json(success({
+    return success({
       userId,
       cycleLength,
       menstrualLength: pref.menstrualLength || 5,
       hasEnoughData: productForecasts.some(p => p.hasEnoughData),
       summary,
       productForecasts
-    }, '消耗预测查询成功'));
+    }, '消耗预测查询成功', res);
   } catch (err) {
     console.error('getForecast error:', err);
-    return res.json(error('预测查询失败：' + err.message));
+    return error('预测查询失败：' + err.message, 500, null, res);
   }
 }
 

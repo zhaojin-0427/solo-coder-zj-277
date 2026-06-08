@@ -119,20 +119,48 @@ function calculateStockWarningDays(currentQuantity, dailyRate, safetyStockDays =
 }
 
 function extrapolateCurrentStock(latestReport, dailyRate) {
-  if (!latestReport) return { estimatedStock: 0, daysSinceReport: 0, stale: true };
-  if (!dailyRate || dailyRate <= 0) {
-    return { estimatedStock: latestReport.quantity, daysSinceReport: 0, stale: false };
+  if (!latestReport) {
+    return { estimatedStock: 0, daysSinceReport: 0, stale: true, hasRate: false };
   }
-  const daysSinceReport = daysBetween(latestReport.timestamp, todayISO());
+
+  let daysSinceReport = 0;
+  try {
+    const reportDate = new Date(latestReport.timestamp);
+    const now = new Date(todayISO());
+    if (!isNaN(reportDate.getTime())) {
+      const diffMs = now.getTime() - reportDate.getTime();
+      daysSinceReport = Math.max(0, Math.round(diffMs / (1000 * 60 * 60 * 24)));
+    }
+  } catch (e) {
+    daysSinceReport = 0;
+  }
+
+  const stale = daysSinceReport > 7;
+  const hasRate = !!(dailyRate && dailyRate > 0);
+
+  if (!hasRate) {
+    return {
+      estimatedStock: latestReport.quantity,
+      reportedStock: latestReport.quantity,
+      daysSinceReport,
+      estimatedConsumed: 0,
+      stale,
+      hasRate: false,
+      reportDate: latestReport.timestamp,
+      note: '缺少消耗基线数据，无法推算当前库存'
+    };
+  }
+
   const estimatedConsumed = daysSinceReport * dailyRate;
   const estimatedStock = Math.max(0, latestReport.quantity - estimatedConsumed);
-  const stale = daysSinceReport > 7;
+
   return {
     estimatedStock: Number(estimatedStock.toFixed(2)),
     reportedStock: latestReport.quantity,
     daysSinceReport,
     estimatedConsumed: Number(estimatedConsumed.toFixed(2)),
     stale,
+    hasRate: true,
     reportDate: latestReport.timestamp
   };
 }

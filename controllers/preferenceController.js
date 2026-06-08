@@ -7,7 +7,7 @@ function getPreference(req, res) {
   try {
     const { userId } = req.params;
     if (!userId) {
-      return res.json(badRequest('缺少 userId 参数'));
+      return badRequest('缺少 userId 参数', null, res);
     }
 
     const pref = getUserPreference(userId);
@@ -18,7 +18,7 @@ function getPreference(req, res) {
     const recentAnomalies = pref.anomalies.slice(-10).reverse();
     const hasUnaddressedAnomalies = recentAnomalies.length > 0;
 
-    return res.json(success({
+    return success({
       userId,
       cycleLength: pref.cycleLength,
       menstrualLength: pref.menstrualLength,
@@ -34,10 +34,10 @@ function getPreference(req, res) {
         adjustmentTips: generateAdjustmentTips(recentAnomalies, learnedInsights)
       },
       productPreferences: generateProductPreferences(userId, reports)
-    }, '偏好信息查询成功'));
+    }, '偏好信息查询成功', res);
   } catch (err) {
     console.error('getPreference error:', err);
-    return res.json(error('偏好查询失败：' + err.message));
+    return error('偏好查询失败：' + err.message, 500, null, res);
   }
 }
 
@@ -47,57 +47,57 @@ function updatePreference(req, res) {
     const { cycleLength, menstrualLength, budgetLevel, preferredProducts } = req.body;
 
     if (!userId) {
-      return res.json(badRequest('缺少 userId 参数'));
+      return badRequest('缺少 userId 参数', null, res);
     }
 
     const updates = {};
     if (cycleLength !== undefined) {
       if (typeof cycleLength !== 'number' || cycleLength < 21 || cycleLength > 45) {
-        return res.json(badRequest('cycleLength 必须是 21-45 之间的数字'));
+        return badRequest('cycleLength 必须是 21-45 之间的数字', null, res);
       }
       updates.cycleLength = cycleLength;
     }
     if (menstrualLength !== undefined) {
       if (typeof menstrualLength !== 'number' || menstrualLength < 2 || menstrualLength > 10) {
-        return res.json(badRequest('menstrualLength 必须是 2-10 之间的数字'));
+        return badRequest('menstrualLength 必须是 2-10 之间的数字', null, res);
       }
       updates.menstrualLength = menstrualLength;
     }
     if (budgetLevel !== undefined) {
       const validLevels = ['economy', 'normal', 'premium'];
       if (!validLevels.includes(budgetLevel)) {
-        return res.json(badRequest(`budgetLevel 必须是以下之一: ${validLevels.join(', ')}`));
+        return badRequest(`budgetLevel 必须是以下之一: ${validLevels.join(', ')}`, null, res);
       }
       updates.budgetLevel = budgetLevel;
     }
     if (preferredProducts !== undefined) {
       if (!Array.isArray(preferredProducts)) {
-        return res.json(badRequest('preferredProducts 必须是数组'));
+        return badRequest('preferredProducts 必须是数组', null, res);
       }
       const allProducts = getAllProducts().map(p => p.id);
       const invalid = preferredProducts.filter(p => !allProducts.includes(p));
       if (invalid.length > 0) {
-        return res.json(badRequest(`以下产品ID无效: ${invalid.join(', ')}`));
+        return badRequest(`以下产品ID无效: ${invalid.join(', ')}`, null, res);
       }
       updates.preferredProducts = preferredProducts;
     }
 
     if (Object.keys(updates).length === 0) {
-      return res.json(badRequest('没有提供任何可更新的字段'));
+      return badRequest('没有提供任何可更新的字段', null, res);
     }
 
     const updated = updateUserPreference(userId, updates);
-    return res.json(success({
+    return success({
       userId,
       cycleLength: updated.cycleLength,
       menstrualLength: updated.menstrualLength,
       budgetLevel: updated.budgetLevel,
       preferredProducts: updated.preferredProducts,
       lastUpdated: updated.lastUpdated
-    }, '偏好更新成功'));
+    }, '偏好更新成功', res);
   } catch (err) {
     console.error('updatePreference error:', err);
-    return res.json(error('偏好更新失败：' + err.message));
+    return error('偏好更新失败：' + err.message, 500, null, res);
   }
 }
 

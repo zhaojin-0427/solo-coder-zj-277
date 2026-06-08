@@ -25,7 +25,7 @@ app.use((req, res, next) => {
 });
 
 app.get('/', (req, res) => {
-  res.json(success({
+  success({
     name: '生理期用品库存监控与补货建议 API 服务',
     version: '1.0.0',
     endpoints: {
@@ -37,7 +37,7 @@ app.get('/', (req, res) => {
       'GET /api/preference/:userId': '偏好学习/异常检测',
       'PUT /api/preference/:userId': '更新用户偏好'
     }
-  }, '服务运行中'));
+  }, '服务运行中', res);
 });
 
 app.use('/api/inventory', inventoryRoutes);

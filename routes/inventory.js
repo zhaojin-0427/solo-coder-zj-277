@@ -8,10 +8,10 @@ router.post('/report', reportInventory);
 router.get('/history/:userId', getInventoryHistory);
 
 router.get('/products', (req, res) => {
-  res.json(success({
+  success({
     products: getAllProducts(),
     cyclePhases: ['menstrual', 'follicular', 'ovulation', 'luteal']
-  }, '产品列表获取成功'));
+  }, '产品列表获取成功', res);
 });
 
 module.exports = router;

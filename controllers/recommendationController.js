@@ -10,12 +10,12 @@ function getRecommendation(req, res) {
     const { cycles = '1' } = req.query;
 
     if (!userId) {
-      return res.json(badRequest('缺少 userId 参数'));
+      return badRequest('缺少 userId 参数', null, res);
     }
 
     const cyclesNum = Number(cycles);
     if (!Number.isInteger(cyclesNum) || cyclesNum < 1 || cyclesNum > 3) {
-      return res.json(badRequest('cycles 参数必须是 1-3 之间的整数，分别表示采购 1/2/3 个周期的用量'));
+      return badRequest('cycles 参数必须是 1-3 之间的整数，分别表示采购 1/2/3 个周期的用量', null, res);
     }
     const cyclesToBuy = cyclesNum;
 
@@ -24,7 +24,7 @@ function getRecommendation(req, res) {
     const cycleLength = pref.cycleLength || 28;
 
     if (reports.length === 0) {
-      return res.json(success({
+      return success({
         userId,
         message: '暂无上报数据，以下为通用建议',
         hasEnoughData: false,
@@ -32,7 +32,7 @@ function getRecommendation(req, res) {
         savingsStrategies: getGenericSavingsTips(),
         averageConsumptionCycles: [],
         stockWarnings: []
-      }, '查询成功'));
+      }, '查询成功', res);
     }
 
     const productIds = [...new Set(reports.map(r => r.productId))];
@@ -133,7 +133,8 @@ function getRecommendation(req, res) {
     const urgentCount = purchaseList.filter(p => p.urgency === '立即购买').length;
     const warningCount = purchaseList.filter(p => p.urgency === '近期购买').length;
 
-    return res.json(success({
+    const allInsufficient = purchaseList.every(p => !p.hasEnoughData);
+    return success({
       userId,
       cycleLength,
       cyclesToBuy,
@@ -147,11 +148,11 @@ function getRecommendation(req, res) {
       stockWarnings,
       averageConsumptionCycles,
       purchaseList: prioritizedList,
-      tips: generateOverallTips(urgentCount, warningCount, cyclesToBuy)
-    }, '补货建议查询成功'));
+      tips: generateOverallTips(urgentCount, warningCount, cyclesToBuy, allInsufficient)
+    }, '补货建议查询成功', res);
   } catch (err) {
     console.error('getRecommendation error:', err);
-    return res.json(error('建议查询失败：' + err.message));
+    return error('建议查询失败：' + err.message, 500, null, res);
   }
 }
 
@@ -178,8 +179,11 @@ function getGenericSavingsTips() {
   ];
 }
 
-function generateOverallTips(urgentCount, warningCount, cyclesToBuy) {
+function generateOverallTips(urgentCount, warningCount, cyclesToBuy, allInsufficient) {
   const tips = [];
+  if (allInsufficient) {
+    tips.push('当前上报数据不足（每种产品至少需要2次上报），无法建立消耗基线，建议继续定期上报');
+  }
   if (urgentCount > 0) {
     tips.push(`有${urgentCount}种产品库存告急，建议立即下单补货以免断供`);
   }
@@ -189,7 +193,7 @@ function generateOverallTips(urgentCount, warningCount, cyclesToBuy) {
   if (cyclesToBuy >= 3) {
     tips.push('已按3个月用量计算，大批量采购通常可享受更多优惠，注意对比单价');
   }
-  if (urgentCount === 0 && warningCount === 0) {
+  if (!allInsufficient && urgentCount === 0 && warningCount === 0) {
     tips.push('当前库存状况良好，可按正常节奏采购或等待促销活动');
   }
   tips.push('建议在经期前3-5天完成采购，预留物流缓冲时间');
