@@ -37,23 +37,23 @@ function detectCurrentCyclePhase(pref, reports) {
 }
 
 function shouldSkipCycle(productStrategy, pref, cycleIndex) {
-  if (!productStrategy || !productStrategy.skipRules) return false;
+  if (!productStrategy || !productStrategy.skipRules) return { skip: false, reason: null };
   const rules = productStrategy.skipRules;
 
   if (rules.skipEveryNthCycle && rules.skipEveryNthCycle > 0) {
-    if ((cycleIndex + 1) % rules.skipEveryNthCycle === 0) return true;
-  }
-
-  if (rules.skipWhenStockAboveDays) {
-    return true;
+    if ((cycleIndex + 1) % rules.skipEveryNthCycle === 0) {
+      return { skip: true, reason: `按配置每 ${rules.skipEveryNthCycle} 个周期跳过一次` };
+    }
   }
 
   if (rules.skipOnCertainPhases && rules.skipOnCertainPhases.length > 0) {
     const currentPhase = detectCurrentCyclePhase(pref, []);
-    if (currentPhase && rules.skipOnCertainPhases.includes(currentPhase)) return true;
+    if (currentPhase && rules.skipOnCertainPhases.includes(currentPhase)) {
+      return { skip: true, reason: `当前处于 ${currentPhase} 阶段，按配置跳过` };
+    }
   }
 
-  return false;
+  return { skip: false, reason: null };
 }
 
 function getEffectiveProductStrategy(productId, subscription) {
@@ -79,12 +79,15 @@ function getEffectiveProductStrategy(productId, subscription) {
 }
 
 function applyBudgetAdjustment(items, maxBudget) {
-  if (!maxBudget || maxBudget <= 0) return { items, totalCost: 0, budgetExceeded: false, adjusted: false };
+  const realTotalCost = Number(items.reduce((s, i) => s + (i.estimatedCost || 0), 0).toFixed(2));
+  if (!maxBudget || maxBudget <= 0) {
+    return { items, totalCost: realTotalCost, budgetExceeded: false, adjusted: false, maxBudget: null };
+  }
 
-  let totalCost = items.reduce((s, i) => s + (i.estimatedCost || 0), 0);
+  let totalCost = realTotalCost;
 
   if (totalCost <= maxBudget) {
-    return { items, totalCost: Number(totalCost.toFixed(2)), budgetExceeded: false, adjusted: false };
+    return { items, totalCost: Number(totalCost.toFixed(2)), budgetExceeded: false, adjusted: false, maxBudget };
   }
 
   const sorted = [...items].sort((a, b) => {
@@ -214,17 +217,18 @@ function generateRestockPlanSnapshot(userId, options = {}) {
 
       const strategy = getEffectiveProductStrategy(productId, subscription);
 
-      if (shouldSkipCycle(strategy, pref, cycleIdx)) {
+      const generalSkip = shouldSkipCycle(strategy, pref, cycleIdx);
+      if (generalSkip.skip) {
         cycleItems.push({
           productId,
           productName: product.name,
           skipped: true,
-          skipReason: '按跳过规则配置跳过本轮采购'
+          skipReason: generalSkip.reason
         });
         continue;
       }
 
-      const productReports = getReportsByProduct(userId, productId);
+      const productReports = getReportsByUser(userId).filter(r => r.productId === productId);
       const latestReport = productReports.length > 0 ? productReports[productReports.length - 1] : null;
       const rate = calculateConsumptionRate(userId, productId);
 
@@ -255,9 +259,27 @@ function generateRestockPlanSnapshot(userId, options = {}) {
       const safetyStockDays = strategy.minSafetyStockDays || 3;
       const safetyStockQuantity = Math.ceil(adjustedDailyRate * safetyStockDays);
       const warning = calculateStockWarningDays(currentStock, adjustedDailyRate, safetyStockDays);
+      const stockDaysLeftNum = warning.daysLeft === Infinity ? Number.MAX_SAFE_INTEGER : warning.daysLeft;
+
+      const skipRules = strategy.skipRules || {};
+      if (skipRules.skipWhenStockAboveDays && typeof skipRules.skipWhenStockAboveDays === 'number' && skipRules.skipWhenStockAboveDays > 0) {
+        if (stockDaysLeftNum > skipRules.skipWhenStockAboveDays) {
+          cycleItems.push({
+            productId,
+            productName: product.name,
+            unit: product.unit,
+            skipped: true,
+            skipReason: `库存可用 ${stockDaysLeftNum === Number.MAX_SAFE_INTEGER ? '充足' : stockDaysLeftNum + ' 天'}，超过配置的阈值 ${skipRules.skipWhenStockAboveDays} 天`,
+            currentStock: Number(currentStock.toFixed(2)),
+            stockDaysLeft: stockDaysLeftNum === Number.MAX_SAFE_INTEGER ? '充足' : stockDaysLeftNum,
+            safetyStockDays
+          });
+          continue;
+        }
+      }
 
       const cyclesToBuyForThisPlan = 1;
-      const purchase = calculateOptimalPurchase(productId, currentStock, adjustedDailyRate, cycleLength, cyclesToBuyForThisPlan);
+      let purchase = calculateOptimalPurchase(productId, currentStock, adjustedDailyRate, cycleLength, cyclesToBuyForThisPlan);
 
       if (purchase) {
         purchase.safetyStockQuantity = safetyStockQuantity;
@@ -265,6 +287,36 @@ function generateRestockPlanSnapshot(userId, options = {}) {
         purchase.packsWithSafetyStock = Math.ceil(purchase.withSafetyStock / product.defaultPackSize);
         purchase.totalUnitsWithSafetyStock = purchase.packsWithSafetyStock * product.defaultPackSize;
         purchase.estimatedCostWithSafetyStock = Number((purchase.totalUnitsWithSafetyStock * product.avgPricePerUnit).toFixed(2));
+      }
+
+      let estimatedCost = purchase ? purchase.estimatedCostWithSafetyStock : 0;
+      let packsToBuy = purchase ? purchase.packsWithSafetyStock : 0;
+      let totalUnits = purchase ? purchase.totalUnitsWithSafetyStock : 0;
+      let budgetTrimmed = false;
+      let productBudgetExceeded = false;
+      let originalPacksToBuy = packsToBuy;
+      let originalEstimatedCost = estimatedCost;
+
+      if (strategy.maxBudget && strategy.maxBudget > 0 && estimatedCost > strategy.maxBudget) {
+        productBudgetExceeded = true;
+        budgetTrimmed = true;
+        const affordablePacks = Math.floor(strategy.maxBudget / (product.defaultPackSize * product.avgPricePerUnit));
+        if (affordablePacks > 0) {
+          packsToBuy = affordablePacks;
+          totalUnits = affordablePacks * product.defaultPackSize;
+          estimatedCost = Number((affordablePacks * product.defaultPackSize * product.avgPricePerUnit).toFixed(2));
+        } else {
+          packsToBuy = 0;
+          totalUnits = 0;
+          estimatedCost = 0;
+        }
+        if (purchase) {
+          purchase.productBudget = {
+            maxBudget: strategy.maxBudget,
+            originalEstimatedCost,
+            trimmed: budgetTrimmed
+          };
+        }
       }
 
       const urgencyPriority = warning.critical ? 0 : warning.warning ? 1 : 2;
@@ -288,12 +340,17 @@ function generateRestockPlanSnapshot(userId, options = {}) {
           daysLeft: warning.daysLeft === Infinity ? null : warning.daysLeft
         },
         suggestedPurchase: purchase,
-        estimatedCost: purchase ? purchase.estimatedCostWithSafetyStock : 0,
-        packsToBuy: purchase ? purchase.packsWithSafetyStock : 0,
-        totalUnits: purchase ? purchase.totalUnitsWithSafetyStock : 0,
+        estimatedCost,
+        packsToBuy,
+        totalUnits,
         urgencyPriority,
         urgency: warning.critical ? '立即购买' : warning.warning ? '近期购买' : '正常采购',
-        savingsStrategies: generateSavingsStrategies(productId, rate.dailyRate * cycleLength)
+        savingsStrategies: generateSavingsStrategies(productId, rate.dailyRate * cycleLength),
+        budgetTrimmed,
+        productBudgetExceeded,
+        originalPacksToBuy: budgetTrimmed ? originalPacksToBuy : undefined,
+        originalEstimatedCost: budgetTrimmed ? originalEstimatedCost : undefined,
+        productMaxBudget: strategy.maxBudget || null
       });
     }
 
@@ -314,7 +371,7 @@ function generateRestockPlanSnapshot(userId, options = {}) {
       currentPhase,
       items: finalItems,
       budgetSummary: {
-        maxBudget: budgetResult.maxBudget || subscription.globalMaxBudget,
+        maxBudget: budgetResult.maxBudget ?? subscription.globalMaxBudget ?? null,
         estimatedTotalCost: budgetResult.totalCost,
         baseTotalCost: Number(finalItems.reduce((s, i) => s + (i.baseEstimatedCost || i.estimatedCost || 0), 0).toFixed(2)),
         budgetExceeded: budgetResult.budgetExceeded,
@@ -439,6 +496,12 @@ function configureSubscriptionHandler(req, res) {
             const n = Number(sr.skipEveryNthCycle);
             if (!Number.isInteger(n) || n < 0 || n > 12) {
               return badRequest(`产品 ${pid} 的 skipEveryNthCycle 必须是 0-12 整数`, null, res);
+            }
+          }
+          if (sr.skipWhenStockAboveDays !== undefined && sr.skipWhenStockAboveDays !== null) {
+            const n = Number(sr.skipWhenStockAboveDays);
+            if (!Number.isInteger(n) || n < 0 || n > 365) {
+              return badRequest(`产品 ${pid} 的 skipWhenStockAboveDays 必须是 0-365 整数或 null`, null, res);
             }
           }
           if (sr.skipOnCertainPhases !== undefined) {
