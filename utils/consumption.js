@@ -1,4 +1,4 @@
-const { daysBetween } = require('./date');
+const { daysBetween, todayISO } = require('./date');
 const { getReportsByProduct, getProduct } = require('../models/store');
 
 function calculateConsumptionRate(userId, productId) {
@@ -118,9 +118,29 @@ function calculateStockWarningDays(currentQuantity, dailyRate, safetyStockDays =
   };
 }
 
+function extrapolateCurrentStock(latestReport, dailyRate) {
+  if (!latestReport) return { estimatedStock: 0, daysSinceReport: 0, stale: true };
+  if (!dailyRate || dailyRate <= 0) {
+    return { estimatedStock: latestReport.quantity, daysSinceReport: 0, stale: false };
+  }
+  const daysSinceReport = daysBetween(latestReport.timestamp, todayISO());
+  const estimatedConsumed = daysSinceReport * dailyRate;
+  const estimatedStock = Math.max(0, latestReport.quantity - estimatedConsumed);
+  const stale = daysSinceReport > 7;
+  return {
+    estimatedStock: Number(estimatedStock.toFixed(2)),
+    reportedStock: latestReport.quantity,
+    daysSinceReport,
+    estimatedConsumed: Number(estimatedConsumed.toFixed(2)),
+    stale,
+    reportDate: latestReport.timestamp
+  };
+}
+
 module.exports = {
   calculateConsumptionRate,
   calculateAverageConsumptionCycle,
   detectAnomaly,
-  calculateStockWarningDays
+  calculateStockWarningDays,
+  extrapolateCurrentStock
 };

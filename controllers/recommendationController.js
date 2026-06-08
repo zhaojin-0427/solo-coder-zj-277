@@ -1,6 +1,6 @@
 const { success, badRequest, error } = require('../utils/response');
 const { getReportsByUser, getReportsByProduct, getUserPreference, getProduct, getAllProducts } = require('../models/store');
-const { calculateConsumptionRate, calculateAverageConsumptionCycle, calculateStockWarningDays } = require('../utils/consumption');
+const { calculateConsumptionRate, calculateAverageConsumptionCycle, calculateStockWarningDays, extrapolateCurrentStock } = require('../utils/consumption');
 const { generateSavingsStrategies, calculateOptimalPurchase } = require('../utils/savings');
 const { addDays, formatDate, todayISO } = require('../utils/date');
 
@@ -8,11 +8,16 @@ function getRecommendation(req, res) {
   try {
     const { userId } = req.params;
     const { cycles = '1' } = req.query;
-    const cyclesToBuy = parseInt(cycles) || 1;
 
     if (!userId) {
       return res.json(badRequest('缺少 userId 参数'));
     }
+
+    const cyclesNum = Number(cycles);
+    if (!Number.isInteger(cyclesNum) || cyclesNum < 1 || cyclesNum > 3) {
+      return res.json(badRequest('cycles 参数必须是 1-3 之间的整数，分别表示采购 1/2/3 个周期的用量'));
+    }
+    const cyclesToBuy = cyclesNum;
 
     const reports = getReportsByUser(userId);
     const pref = getUserPreference(userId);
@@ -42,6 +47,8 @@ function getRecommendation(req, res) {
       const product = getProduct(productId);
       const rate = calculateConsumptionRate(userId, productId);
       const cycle = calculateAverageConsumptionCycle(userId, productId, cycleLength);
+      const stockExtrapolation = extrapolateCurrentStock(latestReport, rate?.dailyRate);
+      const currentStock = stockExtrapolation.estimatedStock;
 
       if (cycle) {
         averageConsumptionCycles.push({
@@ -62,27 +69,32 @@ function getRecommendation(req, res) {
           unit: product?.unit || '单位',
           hasEnoughData: false,
           message: '数据不足，无法精确计算，建议按常规用量采购',
-          currentStock: latestReport.quantity,
+          currentStock,
+          reportedStock: latestReport.quantity,
+          daysSinceLastReport: stockExtrapolation.daysSinceReport,
+          stockIsStale: stockExtrapolation.stale,
           suggestedPurchase: null,
           savingsStrategies: product ? generateSavingsStrategies(productId, product.defaultPackSize) : []
         });
         return;
       }
 
-      const warning = calculateStockWarningDays(latestReport.quantity, rate.dailyRate, 3);
-      const purchase = calculateOptimalPurchase(productId, latestReport.quantity, rate.dailyRate, cycleLength, cyclesToBuy);
+      const warning = calculateStockWarningDays(currentStock, rate.dailyRate, 3);
+      const purchase = calculateOptimalPurchase(productId, currentStock, rate.dailyRate, cycleLength, cyclesToBuy);
 
       if (warning.warning || warning.critical) {
         stockWarnings.push({
           productId,
           productName: product?.name || productId,
-          currentStock: latestReport.quantity,
+          currentStock,
+          reportedStock: latestReport.quantity,
           dailyRate: rate.dailyRate,
           daysLeft: warning.daysLeft,
           level: warning.critical ? 'critical' : 'warning',
           suggestion: warning.critical
             ? `库存极度紧张，预计仅能维持${warning.daysLeft}天，请立即补货`
-            : `库存偏低，预计仅能维持${warning.daysLeft}天，建议近期补货`
+            : `库存偏低，预计仅能维持${warning.daysLeft}天，建议近期补货`,
+          daysSinceLastReport: stockExtrapolation.daysSinceReport
         });
       }
 
@@ -99,7 +111,10 @@ function getRecommendation(req, res) {
         productName: product?.name || productId,
         unit: product?.unit || '单位',
         hasEnoughData: true,
-        currentStock: latestReport.quantity,
+        currentStock,
+        reportedStock: latestReport.quantity,
+        daysSinceLastReport: stockExtrapolation.daysSinceReport,
+        stockIsStale: stockExtrapolation.stale,
         stockDaysLeft: warning.daysLeft === Infinity ? '充足' : warning.daysLeft,
         suggestedPurchase: purchase,
         suggestedRestockDate: restockDate,

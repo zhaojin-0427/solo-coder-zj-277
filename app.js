@@ -9,7 +9,15 @@ const preferenceRoutes = require('./routes/preference');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-app.use(express.json());
+app.use(express.json({
+  verify: (req, res, buf, encoding) => {
+    try {
+      JSON.parse(buf.toString(encoding || 'utf8'));
+    } catch (e) {
+      throw new SyntaxError('JSON 格式错误：' + e.message);
+    }
+  }
+}));
 
 app.use((req, res, next) => {
   res.setHeader('Content-Type', 'application/json; charset=utf-8');
@@ -47,6 +55,13 @@ app.use((req, res) => {
 
 app.use((err, req, res, next) => {
   console.error('Unhandled error:', err);
+  if (err instanceof SyntaxError || (err.type && err.type.includes('entity.parse.failed'))) {
+    return res.status(400).json({
+      code: 400,
+      message: '请求体 JSON 格式错误，请检查参数格式',
+      data: process.env.NODE_ENV === 'development' ? err.message : null
+    });
+  }
   res.status(500).json({
     code: 500,
     message: '服务器内部错误',

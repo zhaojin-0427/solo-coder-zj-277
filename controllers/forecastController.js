@@ -1,6 +1,6 @@
 const { success, badRequest, error } = require('../utils/response');
 const { getReportsByUser, getReportsByProduct, getUserPreference, getProduct } = require('../models/store');
-const { calculateConsumptionRate, calculateAverageConsumptionCycle, calculateStockWarningDays } = require('../utils/consumption');
+const { calculateConsumptionRate, calculateAverageConsumptionCycle, calculateStockWarningDays, extrapolateCurrentStock } = require('../utils/consumption');
 const { addDays, formatDate, todayISO, daysBetween } = require('../utils/date');
 
 function getForecast(req, res) {
@@ -33,6 +33,9 @@ function getForecast(req, res) {
       const cycle = calculateAverageConsumptionCycle(userId, productId, cycleLength);
       const rate = calculateConsumptionRate(userId, productId);
 
+      const stockExtrapolation = extrapolateCurrentStock(latestReport, rate?.dailyRate);
+      const currentStock = stockExtrapolation.estimatedStock;
+
       if (!cycle || !rate) {
         productForecasts.push({
           productId,
@@ -44,12 +47,13 @@ function getForecast(req, res) {
             timestamp: latestReport.timestamp,
             cyclePhase: latestReport.cyclePhase
           },
-          reportsCount: productReports.length
+          reportsCount: productReports.length,
+          stockExtrapolation
         });
         return;
       }
 
-      const warning = calculateStockWarningDays(latestReport.quantity, rate.dailyRate, 3);
+      const warning = calculateStockWarningDays(currentStock, rate.dailyRate, 3);
       const nextRestockDate = warning.daysLeft !== Infinity
         ? addDays(todayISO(), Math.max(0, warning.daysLeft - 3))
         : null;
@@ -59,7 +63,7 @@ function getForecast(req, res) {
         : addDays(todayISO(), cycleLength);
 
       const needBeforeNextPeriod = rate.dailyRate * (pref.menstrualLength || 5);
-      const stockAdequate = latestReport.quantity >= needBeforeNextPeriod;
+      const stockAdequate = currentStock >= needBeforeNextPeriod;
 
       productForecasts.push({
         productId,
@@ -69,8 +73,11 @@ function getForecast(req, res) {
         dailyConsumption: rate.dailyRate,
         perCycleConsumption: cycle.perCycle,
         cycleLength,
-        currentStock: latestReport.quantity,
+        currentStock,
+        reportedStock: latestReport.quantity,
         stockReportDate: latestReport.timestamp,
+        daysSinceLastReport: stockExtrapolation.daysSinceReport,
+        stockIsStale: stockExtrapolation.stale,
         stockWarning: {
           daysLeft: warning.daysLeft === Infinity ? '充足' : warning.daysLeft,
           isWarning: warning.warning,
