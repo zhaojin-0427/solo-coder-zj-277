@@ -1,0 +1,13 @@
+{
+  "name": "period-inventory-api",
+  "version": "1.0.0",
+  "description": "生理期用品库存监控与补货建议 API 服务",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "dev": "node app.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
