@@ -12,7 +12,25 @@ const EVENT_TYPES = {
   SUBSCRIPTION_CONFIGURED: 'subscription.configured',
   PLAN_GENERATED: 'plan.generated',
   PLAN_CONFIRMED: 'plan.confirmed',
-  PLAN_CANCELLED: 'plan.cancelled'
+  PLAN_CANCELLED: 'plan.cancelled',
+  SHAREDSPACE_CREATED: 'sharedspace.created',
+  SHAREDSPACE_UPDATED: 'sharedspace.updated',
+  SHAREDSPACE_DELETED: 'sharedspace.deleted',
+  SHAREDSPACE_MEMBER_INVITED: 'sharedspace.member.invited',
+  SHAREDSPACE_MEMBER_JOINED: 'sharedspace.member.joined',
+  SHAREDSPACE_MEMBER_LEFT: 'sharedspace.member.left',
+  SHAREDSPACE_MEMBER_REMOVED: 'sharedspace.member.removed',
+  SHAREDSPACE_MEMBER_UPDATED: 'sharedspace.member.updated',
+  SHAREDSPACE_CONSUMPTION_REPORTED: 'sharedspace.consumption.reported',
+  SHAREDSPACE_PURCHASE_REPORTED: 'sharedspace.purchase.reported',
+  SHAREDSPACE_BORROW_REPORTED: 'sharedspace.borrow.reported',
+  SHAREDSPACE_RETURN_REPORTED: 'sharedspace.return.reported',
+  SHAREDSPACE_PREFERENCE_REPORTED: 'sharedspace.preference.reported',
+  SHAREDSPACE_PLAN_GENERATED: 'sharedspace.plan.generated',
+  SHAREDSPACE_PLAN_CONFIRMED: 'sharedspace.plan.confirmed',
+  SHAREDSPACE_BILL_SETTLED: 'sharedspace.bill.settled',
+  SHAREDSPACE_CONFLICT_RESOLVED: 'sharedspace.conflict.resolved',
+  SHAREDSPACE_ROLLBACK: 'sharedspace.rollback'
 };
 
 function ensureDataDir() {
